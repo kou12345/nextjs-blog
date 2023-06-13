@@ -1,5 +1,6 @@
 import fs from "fs";
 import matter from "gray-matter";
+import { marked } from "marked";
 import { GetStaticProps } from "next";
 
 const folderPath = "public/posts";
@@ -38,7 +39,7 @@ const Post: React.FC<PostProps> = ({ frontMatter, content }) => {
   return (
     <div>
       <h1>{frontMatter.title}</h1>
-      <div>{content}</div>
+      <div dangerouslySetInnerHTML={{ __html: marked(content) }}></div>
     </div>
   );
 };
