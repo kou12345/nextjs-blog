@@ -1,5 +1,6 @@
 import fs from "fs";
 import matter from "gray-matter";
+import Link from "next/link";
 
 // makrdownのファイル名はURLの一部として利用する
 
@@ -14,19 +15,44 @@ export const getStaticProps = () => {
     // ファイルの中身を取得
     const fileContent = fs.readFileSync(`${folderPath}/${fileName}`, "utf-8");
     // front-matterが入ったdataとfront-matter以外のcontentを取り出す
-    const { data, content } = matter(fileContent);
-    console.log("data:", data);
-    console.log("content:", content);
+    const { data } = matter(fileContent);
+    return {
+      frontMatter: data,
+      slug,
+    };
   });
+
   return {
     props: {
-      posts: [],
+      posts,
     },
   };
 };
 
-const Home: React.FC = () => {
-  return <div className="my-8">コンテンツ</div>;
+type HomeProps = {
+  // anyではなくちゃんと型書いて
+  posts: {
+    frontMatter: {
+      // front-matterのプロパティの型情報を記述
+      // 例えば、titleやdateなどのプロパティがある場合は適宜追加してください
+      title: string;
+      date: string;
+    };
+    slug: string;
+  }[];
+};
+
+const Home: React.FC<HomeProps> = ({ posts }) => {
+  console.log(posts);
+  return (
+    <div className="my-8">
+      {posts.map((post) => (
+        <div key={post.slug}>
+          <Link href={`/post/${post.slug}`}>{post.frontMatter.title}</Link>
+        </div>
+      ))}
+    </div>
+  );
 };
 
 export default Home;
