@@ -37,6 +37,7 @@ type HomeProps = {
       // 例えば、titleやdateなどのプロパティがある場合は適宜追加してください
       title: string;
       date: string;
+      image: string;
     };
     slug: string;
   }[];
@@ -46,9 +47,11 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
   console.log(posts);
   return (
     <div className="my-8">
-      {posts.map((post) => (
-        <PostCard key={post.slug} post={post} />
-      ))}
+      <div className="grid grid-cols-3">
+        {posts.map((post) => (
+          <PostCard key={post.slug} post={post} />
+        ))}
+      </div>
     </div>
   );
 };
