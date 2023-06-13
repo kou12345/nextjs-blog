@@ -1,6 +1,6 @@
+import PostCard from "@/components/PostCard";
 import fs from "fs";
 import matter from "gray-matter";
-import Link from "next/link";
 
 // makrdownのファイル名はURLの一部として利用する
 
@@ -47,9 +47,7 @@ const Home: React.FC<HomeProps> = ({ posts }) => {
   return (
     <div className="my-8">
       {posts.map((post) => (
-        <div key={post.slug}>
-          <Link href={`/post/${post.slug}`}>{post.frontMatter.title}</Link>
-        </div>
+        <PostCard key={post.slug} post={post} />
       ))}
     </div>
   );
