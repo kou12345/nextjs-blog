@@ -14,7 +14,7 @@ type PostCardProps = {
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
   return (
-    <Link href={`/post/${post.slug}`}>
+    <Link href={`/posts/${post.slug}`}>
       <div className="border rounded-lg">
         <Image
           src={`/${post.frontMatter.image}`}
