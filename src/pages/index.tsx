@@ -1,4 +1,5 @@
 import fs from "fs";
+import matter from "gray-matter";
 
 // makrdownのファイル名はURLの一部として利用する
 
@@ -12,7 +13,10 @@ export const getStaticProps = () => {
     const slug = fileName.replace(/\.md$/, "");
     // ファイルの中身を取得
     const fileContent = fs.readFileSync(`${folderPath}/${fileName}`, "utf-8");
-    console.log("slug:", slug);
+    // front-matterが入ったdataとfront-matter以外のcontentを取り出す
+    const { data, content } = matter(fileContent);
+    console.log("data:", data);
+    console.log("content:", content);
   });
   return {
     props: {
