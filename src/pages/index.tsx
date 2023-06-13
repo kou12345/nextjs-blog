@@ -22,9 +22,14 @@ export const getStaticProps = () => {
     };
   });
 
+  // 記事を最新順にソート
+  const sortedPosts = posts.sort((postA, postB) =>
+    new Date(postA.frontMatter.date) > new Date(postB.frontMatter.date) ? -1 : 1
+  );
+
   return {
     props: {
-      posts,
+      posts: sortedPosts,
     },
   };
 };
